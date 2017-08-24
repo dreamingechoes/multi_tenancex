@@ -1,20 +1,35 @@
 # MultiTenancex
 
-To start your Phoenix server:
+Example of Phoenix application with database multi tenancy.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+## Setup development environment with Docker
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+This project is Docker friendly from day one. To start working on it:
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+* Setup the multi_tenancex container with `docker-compose build multi_tenancex`
+* Install dependencies with `docker-compose run multi_tenancex mix deps.get`
+* Create your database with `docker-compose run multi_tenancex mix ecto.create`
+* Migrate your database with `docker-compose run multi_tenancex mix ecto.migrate`
+* Install Node.js dependencies with `docker-compose run multi_tenancex bash -c "cd assets; npm install"`
+* Start the application with `docker-compose up`
 
-## Learn more
+## Setup testing environment with Docker
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+This step assumes you already followed instructions from previous paragraph.
+
+* Create your testing database with `docker-compose run multi_tenancex env MIX_ENV=test mix ecto.create`
+* Migrate your testing database with `docker-compose run multi_tenancex env MIX_ENV=test mix ecto.migrate`
+* Run the test suite with `mix test`
+* Run the test suite with coverage report on `cover` folder with: `docker-compose run multi_tenancex env MIX_ENV=test mix coveralls.html`
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+## License
+
+**MultiTenancex** is released under the [MIT License](http://www.opensource.org/licenses/MIT).
