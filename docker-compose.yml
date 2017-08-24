@@ -1,0 +1,13 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.5
+  multi_tenancex:
+    build: .
+    command: mix phx.server
+    volumes:
+      - .:/multi_tenancex
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
