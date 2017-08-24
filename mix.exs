@@ -5,12 +5,20 @@ defmodule MultiTenancex.Mixfile do
     [
       app: :multi_tenancex,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      # ExCoveralls config
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        "coveralls": :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -26,6 +34,7 @@ defmodule MultiTenancex.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:ci),   do: ["lib", "test/support"]
   defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
@@ -41,7 +50,21 @@ defmodule MultiTenancex.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+
+      # Authentication
+      {:comeonin, "~> 4.0"},
+      {:guardian, "~> 0.14.0"},
+
+      # Code analysis
+      {:credo, "~> 0.8", only: [:dev, :test]},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+
+      # Code documentation
+      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+
+      # Testing
+      {:excoveralls, "~> 0.6", only: [:test, :ci]}
     ]
   end
 
