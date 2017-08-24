@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :multi_tenancex, MultiTenancex.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "",
+  password: "postgres",
   database: "multi_tenancex_test",
-  hostname: "localhost",
+  hostname: "db",
   pool: Ecto.Adapters.SQL.Sandbox
