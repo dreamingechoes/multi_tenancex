@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-lg-12">
+    <%= if get_flash(@conn, :info) do %>
+      <div class="alert alert-info fade in alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        <strong>Info!</strong> <%= get_flash(@conn, :info) %>
+      </div>
+    <% end %>
+
+    <%= if get_flash(@conn, :error) do %>
+      <div class="alert alert-danger fade in alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        <strong>Error!</strong> <%= get_flash(@conn, :error) %>
+      </div>
+    <% end %>
+  </div>
+</div>
