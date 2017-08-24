@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header"><%= @company.name %></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <%= gettext("Company Details") %>
+      </div>
+
+      <div class="panel-body">
+        <strong>Name:</strong> <%= @company.name %>
+      </div>
+
+      <div class="panel-footer">
+        <%= link "Edit", to: admin_company_path(@conn, :edit, @company), class: "btn btn-primary" %>
+        <%= link "Back", to: admin_company_path(@conn, :index), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
