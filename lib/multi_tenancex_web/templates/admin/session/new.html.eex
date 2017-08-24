@@ -1,0 +1,28 @@
+<div class="col-md-4 col-md-offset-4">
+  <div class="login-panel panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">MultiTenancex Admin</h3>
+    </div>
+
+    <div class="panel-body">
+      <%= form_for @conn, admin_session_path(@conn, :create), [as: :session], fn f -> %>
+
+        <div class="form-group">
+          <%= select f, :company, tenant_list_options(), class: "form-control", prompt: gettext("Select a company"), required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= text_input f, :email, placeholder: gettext("Email"), class: "form-control", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= password_input f, :password, placeholder: gettext("Password"), class: "form-control", required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= submit "Log in", class: "btn btn-lg btn-success btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
