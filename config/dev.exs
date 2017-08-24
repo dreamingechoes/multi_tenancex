@@ -52,7 +52,7 @@ config :phoenix, :stacktrace_depth, 20
 config :multi_tenancex, MultiTenancex.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "multi_tenancex_dev",
   hostname: "localhost",
   pool_size: 10
