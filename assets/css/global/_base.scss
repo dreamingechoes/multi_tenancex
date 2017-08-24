@@ -1,0 +1,17 @@
+body {
+  padding-top: 54px;
+  font-size: 14px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+footer {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #555;
+}

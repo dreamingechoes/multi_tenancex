@@ -19,3 +19,10 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+// Vendor
+import $ from "jquery"
+import Popper from "popper.js"
+
+import "popper.js/dist/umd/popper"
+import "bootstrap/dist/js/bootstrap.min"
