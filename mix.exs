@@ -54,6 +54,7 @@ defmodule MultiTenancex.Mixfile do
 
       # Authentication
       {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 1.0", override: true},
       {:guardian, "~> 0.14.0"},
 
       # Code analysis
