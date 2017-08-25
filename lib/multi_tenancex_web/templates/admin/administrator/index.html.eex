@@ -1,0 +1,30 @@
+<h2>Listing Administrators</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for administrator <- @administrators do %>
+    <tr>
+      <td><%= administrator.firstname %></td>
+      <td><%= administrator.lastname %></td>
+      <td><%= administrator.email %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: admin_administrator_path(@conn, :show, administrator), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: admin_administrator_path(@conn, :edit, administrator), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: admin_administrator_path(@conn, :delete, administrator), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Administrator", to: admin_administrator_path(@conn, :new) %></span>

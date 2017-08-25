@@ -1,0 +1,23 @@
+<h2>Show Administrator</h2>
+
+<ul>
+
+  <li>
+    <strong>Firstname:</strong>
+    <%= @administrator.firstname %>
+  </li>
+
+  <li>
+    <strong>Lastname:</strong>
+    <%= @administrator.lastname %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @administrator.email %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: admin_administrator_path(@conn, :edit, @administrator) %></span>
+<span><%= link "Back", to: admin_administrator_path(@conn, :index) %></span>
