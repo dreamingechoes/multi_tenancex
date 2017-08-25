@@ -18,10 +18,8 @@
 
   <body>
     <div class="container">
-      <div class="row">
-        <%= render "_flash_messages.html", assigns %>
-        <%= render @view_module, @view_template, assigns %>
-      </div>
+      <%= render "_flash_messages.html", assigns %>
+      <%= render @view_module, @view_template, assigns %>
     </div>
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>
   </body>

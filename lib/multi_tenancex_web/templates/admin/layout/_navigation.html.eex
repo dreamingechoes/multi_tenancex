@@ -16,7 +16,7 @@
         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
       </a>
       <ul class="dropdown-menu dropdown-user">
-        <li> <%= link gettext("Go to MultiTenancex"), to: root_path(@conn, :index) %> </li>
+        <li> <%= link gettext("Go to MultiTenancex"), to: "index_path(@conn, :index)" %> </li>
         <li class="divider"></li>
         <li> <%= link gettext("Logout"), to: admin_session_path(@conn, :delete), class: "logout" %> </li>
       </ul>
@@ -29,14 +29,14 @@
 
         <li class="sidebar-search">
           <div class="input-group custom-tenant-form">
-            <%= form_for @conn, admin_dashboard_path(@conn, :switch_tenant), [as: :switch], fn f -> %>
-              <%= select f, :company, tenant_list_options(), class: "form-control select-tenant",
+            <!-- <%#= form_for @conn, admin_dashboard_path(@conn, :switch_tenant), [as: :switch], fn f -> %>
+              <%#= select f, :company, tenant_list_options(), class: "form-control select-tenant",
                         selected: current_admin_tenant(@conn), prompt: gettext("Switch to company"),
                         required: true %>
               <span class="input-group-btn">
-                <%= submit raw("<i class='fa fa-arrow-up'></i>"), class: "btn btn-default" %>
+                <%#= submit raw("<i class='fa fa-arrow-up'></i>"), class: "btn btn-default" %>
               </span>
-            <% end %>
+            <%# end %> -->
           </div>
         </li>
 
@@ -55,7 +55,7 @@
             <li> <%= link gettext("New Company"), to: admin_company_path(@conn, :new) %> </li>
           </ul>
         </li>
-        
+
       </ul>
     </div>
   </div>
