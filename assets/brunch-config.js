@@ -2,10 +2,16 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      joinTo: {
+        'js/app.js': /^(js\/app)|(node_modules)/,
+        'js/admin.js': /^(js\/admin)|(node_modules)/
+      }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      joinTo: {
+        "css/app.css": /^(css\/app)/,
+        "css/admin.css": /^(css\/admin)/
+      }
     },
     templates: {
       joinTo: "js/app.js"
@@ -43,7 +49,8 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["js/app"]
+      "js/app.js": ["js/app/app"],
+      "js/admin.js": ["js/admin/admin"]
     }
   },
 
