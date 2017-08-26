@@ -1,4 +1,4 @@
-defmodule MultiTenancexWeb.ProductController do
+defmodule MultiTenancexWeb.Admin.ProductController do
   use MultiTenancexWeb, :controller
 
   alias MultiTenancex.Companies
