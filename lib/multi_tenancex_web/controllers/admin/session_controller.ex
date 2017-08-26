@@ -18,13 +18,13 @@ defmodule MultiTenancexWeb.Admin.SessionController do
          session_params <- Map.put(session_params, "company", company_name)
     do
       case AdminSession.authenticate(session_params) do
-        {:ok, admin} ->
+        {:ok, administrator} ->
           claims =
             Guardian.Claims.app_claims
             |> Map.put(:current_admin_tenant, company_name)
 
           conn
-          |> Guardian.Plug.sign_in(admin, nil, claims)
+          |> Guardian.Plug.sign_in(%{administrator: administrator, company: company_name}, :access, claims)
           |> put_flash(:info, gettext("You have successfuly logged in."))
           |> redirect(to: admin_dashboard_path(conn, :index))
         :error ->
