@@ -8,7 +8,7 @@ defmodule MultiTenancex.Repo.Migrations.CreateProducts do
       add :image,       :string
       add :price,       :float
       add :units,       :integer
-      add :company_id,  references(:company, on_delete: :nothing)
+      add :company_id,  references(:companies, on_delete: :nothing)
 
       timestamps()
     end
