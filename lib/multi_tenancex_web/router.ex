@@ -28,7 +28,7 @@ defmodule MultiTenancexWeb.Router do
 
     # Custom plugs
     plug MultiTenancexWeb.Plug.CurrentAdmin
-    plug MultiTenancexWeb.Plug.CurrentAdminTenant
+    plug MultiTenancexWeb.Plug.CurrentTenant
   end
 
   pipeline :unauthenticated_admin do
