@@ -15,7 +15,6 @@ defmodule MultiTenancexWeb.Admin.DashboardController do
     end
   end
 
-
   @doc """
   Switch between tenants for an administrator.
   """
@@ -26,10 +25,9 @@ defmodule MultiTenancexWeb.Admin.DashboardController do
       claims =
         claims
         |> Map.put("current_admin_tenant", company_name)
-        |> Map.put(:key, :admin)
 
       conn
-      |> Guardian.Plug.sign_in(current_admin(conn), nil, claims)
+      |> Guardian.Plug.sign_in(%{administrator: current_admin(conn), company: company_name}, :access, claims)
       |> put_flash(:info, gettext("You have successfuly switched tenant."))
       |> redirect(to: admin_dashboard_path(conn, :index))
     end

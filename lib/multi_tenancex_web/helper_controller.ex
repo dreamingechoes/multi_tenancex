@@ -14,16 +14,8 @@ defmodule MultiTenancexWeb.HelperController do
   @doc """
   Get the current tenant.
 
-  Returns a `tenant_id` with the current tenant or `nil` if none.
+  Returns a `String.t` with the current tenant or `nil` if none.
   """
   @spec current_tenant(conn :: Plug.Conn.t) :: String.t | nil
   def current_tenant(conn), do: conn.assigns[:current_tenant]
-
-  @doc """
-  Get the current admin tenant.
-
-  Returns a `tenant_id` with the current admin tenant or `nil` if none.
-  """
-  @spec current_admin_tenant(conn :: Plug.Conn.t) :: String.t | nil
-  def current_admin_tenant(conn), do: conn.assigns[:current_admin_tenant]
 end

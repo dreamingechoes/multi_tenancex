@@ -21,7 +21,7 @@ defmodule MultiTenancexWeb.Admin.SessionController do
         {:ok, administrator} ->
           claims =
             Guardian.Claims.app_claims
-            |> Map.put(:current_admin_tenant, company_name)
+            |> Map.put(:current_tenant, company_name)
 
           conn
           |> Guardian.Plug.sign_in(%{administrator: administrator, company: company_name}, :access, claims)
@@ -29,7 +29,7 @@ defmodule MultiTenancexWeb.Admin.SessionController do
           |> redirect(to: admin_dashboard_path(conn, :index))
         :error ->
           conn
-          |> put_flash(:error, gettext("Wrong username or password or company name"))
+          |> put_flash(:error, gettext("Wrong email or password"))
           |> put_status(:bad_request)
           |> render("new.html")
       end

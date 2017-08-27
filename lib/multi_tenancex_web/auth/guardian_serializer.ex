@@ -10,8 +10,8 @@ defmodule MultiTenancexWeb.GuardianSerializer do
 
   def from_token("Data:" <> data) do
     [administrator_id, _company] = String.split(data, "-")
-    administrator =
-      Accounts.get_administrator!(administrator_id)
+    administrator = Accounts.get_administrator!(administrator_id)
+    
     {:ok, administrator}
   end
   def from_token(_), do: {:error, "Unknown resource type"}
