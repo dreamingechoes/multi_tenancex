@@ -26,6 +26,3 @@ import Popper from "popper.js"
 
 import "popper.js/dist/umd/popper"
 import "bootstrap/dist/js/bootstrap.min"
-import "metismenu/dist/metisMenu.min"
-
-import "./components/navbar"
