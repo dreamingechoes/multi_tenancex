@@ -4,16 +4,14 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/multi_tenancex
     docker:
       - image: circleci/elixir:1.5
       - image: postgres:9.5
-        env:
-          - POSTGRES_PASSWORD=ubuntu
-          - POSTGRES_USER=ubuntu
-    working_directory: ~/multi_tenancex
+        environment:
+          POSTGRES_USER: ubuntu
     steps:
       - checkout
-
       - run: mix local.rebar --force
       - run: mix local.hex --force
       - run: mix deps.get
