@@ -41,6 +41,7 @@ defmodule MultiTenancexWeb do
       import MultiTenancexWeb.Router.Helpers
       import MultiTenancexWeb.ErrorHelpers
       import MultiTenancexWeb.Gettext
+      import MultiTenancexWeb.HelperController
     end
   end
 
