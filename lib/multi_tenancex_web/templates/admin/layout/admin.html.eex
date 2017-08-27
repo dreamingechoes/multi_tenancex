@@ -17,13 +17,15 @@
   </head>
 
   <body>
-    <div id="wrapper">
-      <%= render "_navigation.html", assigns %>
-      <div id="page-wrapper">
-        <%= render "_flash_messages.html", assigns %>
+    <%= render("_navbar.html", assigns) %>
+    <div class="container">
+      <%= render("_flash_messages.html", assigns) %>
+      <main role="main">
         <%= render @view_module, @view_template, assigns %>
-      </div>
+      </main>
     </div>
+    <%= render("_footer.html", assigns) %>
+
     <script src="<%= static_path(@conn, "/js/admin.js") %>"></script>
   </body>
 </html>

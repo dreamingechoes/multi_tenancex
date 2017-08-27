@@ -1,24 +1,5 @@
-<div class="row">
-  <div class="col-lg-12">
-    <h1 class="page-header"><%= gettext("New Company") %></h1>
-  </div>
-</div>
+<h2>New company</h2>
 
-<div class="row">
-  <div class="col-lg-12">
-    <div class="panel panel-default">
+<%= render "form.html", Map.put(assigns, :action, admin_company_path(@conn, :create)) %>
 
-      <div class="panel-heading">
-        <%= gettext("Create company") %>
-      </div>
-
-      <div class="panel-body">
-        <%= render "form.html", changeset: @changeset, action: admin_company_path(@conn, :create) %>
-      </div>
-
-      <div class="panel-footer">
-        <%= link "Back", to: admin_company_path(@conn, :index), class: "btn btn-primary" %>
-      </div>
-    </div>
-  </div>
-</div>
+<span><%= link "Back", to: admin_company_path(@conn, :index) %></span>

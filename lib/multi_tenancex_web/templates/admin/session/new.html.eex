@@ -1,7 +1,7 @@
 <%= form_for @conn, admin_session_path(@conn, :create), [as: :session, class: "form-signin"], fn f -> %>
   <h2 class="form-signin-heading"><%= gettext("Please sign in") %></h2>
 
-  <%= select f, :company, tenant_list_options(), class: "form-control", prompt: gettext("Select a company") %>
+  <%= select f, :company, tenant_list_options(), class: "form-control", prompt: gettext("Select a company"), required: true %>
   <%= email_input f, :email, placeholder: gettext("Email"), class: "form-control", required: true %>
   <%= password_input f, :password, placeholder: gettext("Password"), class: "form-control", required: true %>
   <%= submit "Log in", class: "btn btn-lg btn-primary btn-block" %>
