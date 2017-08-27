@@ -11,9 +11,7 @@
     "popper.js": "1.11.0",
     "bootstrap": "4.0.0-beta",
     "jquery": "3.2.1",
-    "sass-brunch": "2.10.4",
-    "metismenu": "2.7.0",
-    "sb-admin-2": "3.3.8"
+    "sass-brunch": "2.10.4"
   },
   "devDependencies": {
     "babel-brunch": "6.1.1",
