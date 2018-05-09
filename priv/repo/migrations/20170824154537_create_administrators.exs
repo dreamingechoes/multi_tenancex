@@ -3,14 +3,14 @@ defmodule MultiTenancex.Repo.Migrations.CreateAdministrators do
 
   def change do
     create table(:administrators) do
-      add :firstname,           :string
-      add :lastname,            :string
-      add :email,               :string
-      add :encrypted_password,  :string, null: false
+      add(:firstname, :string)
+      add(:lastname, :string)
+      add(:email, :string)
+      add(:encrypted_password, :string, null: false)
 
       timestamps()
     end
 
-    create unique_index(:administrators, [:email])
+    create(unique_index(:administrators, [:email]))
   end
 end

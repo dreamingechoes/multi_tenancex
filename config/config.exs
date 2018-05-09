@@ -12,10 +12,10 @@ config :multi_tenancex,
 # Configures the endpoint
 config :multi_tenancex, MultiTenancexWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "lg4XZozBjOZtmXbtmS+XZ2VjyK/4364nju982apsGULjxFe4sKYfy8yxby8AXIFr",
+  secret_key_base:
+    "lg4XZozBjOZtmXbtmS+XZ2VjyK/4364nju982apsGULjxFe4sKYfy8yxby8AXIFr",
   render_errors: [view: MultiTenancexWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: MultiTenancex.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: MultiTenancex.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -27,11 +27,11 @@ config :guardian, Guardian,
   allowed_algos: ["HS512"],
   verify_module: Guardian.JWT,
   issuer: "MultiTenancex",
-  ttl: { 30, :days },
+  ttl: {30, :days},
   allowed_drift: 2000,
   verify_issuer: true,
   serializer: MultiTenancexWeb.GuardianSerializer
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

@@ -3,7 +3,7 @@ defmodule MultiTenancexWeb.Admin.SessionController do
 
   use MultiTenancexWeb, :controller
 
-  plug :put_layout, {MultiTenancexWeb.Admin.LayoutView, "admin_auth.html"}
+  plug(:put_layout, {MultiTenancexWeb.Admin.LayoutView, "admin_auth.html"})
 
   @doc """
   Displays the login form for administrators.
@@ -15,18 +15,22 @@ defmodule MultiTenancexWeb.Admin.SessionController do
   """
   def create(conn, %{"session" => session_params}) do
     with company_name <- generate_name(session_params["company"]),
-         session_params <- Map.put(session_params, "company", company_name)
-    do
+         session_params <- Map.put(session_params, "company", company_name) do
       case AdminSession.authenticate(session_params) do
         {:ok, administrator} ->
           claims =
-            Guardian.Claims.app_claims
+            Guardian.Claims.app_claims()
             |> Map.put(:current_tenant, company_name)
 
           conn
-          |> Guardian.Plug.sign_in(%{administrator: administrator, company: company_name}, :access, claims)
+          |> Guardian.Plug.sign_in(
+            %{administrator: administrator, company: company_name},
+            :access,
+            claims
+          )
           |> put_flash(:info, gettext("You have successfuly logged in."))
           |> redirect(to: admin_dashboard_path(conn, :index))
+
         :error ->
           conn
           |> put_flash(:error, gettext("Wrong email or password"))
@@ -41,7 +45,7 @@ defmodule MultiTenancexWeb.Admin.SessionController do
   """
   def delete(conn, _params) do
     conn
-    |> Guardian.Plug.sign_out
+    |> Guardian.Plug.sign_out()
     |> put_flash(:info, gettext("You have successfuly logged out."))
     |> redirect(to: admin_session_path(conn, :new))
   end
@@ -51,7 +55,10 @@ defmodule MultiTenancexWeb.Admin.SessionController do
   """
   def unauthenticated(conn, _params) do
     conn
-    |> put_flash(:error, gettext("You must be logged in as an administrator to access this page."))
+    |> put_flash(
+      :error,
+      gettext("You must be logged in as an administrator to access this page.")
+    )
     |> redirect(to: admin_session_path(conn, :new))
   end
 

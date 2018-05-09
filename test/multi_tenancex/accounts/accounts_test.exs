@@ -6,8 +6,16 @@ defmodule MultiTenancex.AccountsTest do
   describe "administrators" do
     alias MultiTenancex.Accounts.Administrator
 
-    @valid_attrs %{email: "some email", firstname: "some firstname", lastname: "some lastname"}
-    @update_attrs %{email: "some updated email", firstname: "some updated firstname", lastname: "some updated lastname"}
+    @valid_attrs %{
+      email: "some email",
+      firstname: "some firstname",
+      lastname: "some lastname"
+    }
+    @update_attrs %{
+      email: "some updated email",
+      firstname: "some updated firstname",
+      lastname: "some updated lastname"
+    }
     @invalid_attrs %{email: nil, firstname: nil, lastname: nil}
 
     def administrator_fixture(attrs \\ %{}) do
@@ -30,19 +38,25 @@ defmodule MultiTenancex.AccountsTest do
     end
 
     test "create_administrator/1 with valid data creates a administrator" do
-      assert {:ok, %Administrator{} = administrator} = Accounts.create_administrator(@valid_attrs)
+      assert {:ok, %Administrator{} = administrator} =
+               Accounts.create_administrator(@valid_attrs)
+
       assert administrator.email == "some email"
       assert administrator.firstname == "some firstname"
       assert administrator.lastname == "some lastname"
     end
 
     test "create_administrator/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_administrator(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.create_administrator(@invalid_attrs)
     end
 
     test "update_administrator/2 with valid data updates the administrator" do
       administrator = administrator_fixture()
-      assert {:ok, administrator} = Accounts.update_administrator(administrator, @update_attrs)
+
+      assert {:ok, administrator} =
+               Accounts.update_administrator(administrator, @update_attrs)
+
       assert %Administrator{} = administrator
       assert administrator.email == "some updated email"
       assert administrator.firstname == "some updated firstname"
@@ -51,14 +65,22 @@ defmodule MultiTenancex.AccountsTest do
 
     test "update_administrator/2 with invalid data returns error changeset" do
       administrator = administrator_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_administrator(administrator, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Accounts.update_administrator(administrator, @invalid_attrs)
+
       assert administrator == Accounts.get_administrator!(administrator.id)
     end
 
     test "delete_administrator/1 deletes the administrator" do
       administrator = administrator_fixture()
-      assert {:ok, %Administrator{}} = Accounts.delete_administrator(administrator)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_administrator!(administrator.id) end
+
+      assert {:ok, %Administrator{}} =
+               Accounts.delete_administrator(administrator)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Accounts.get_administrator!(administrator.id)
+      end
     end
 
     test "change_administrator/1 returns a administrator changeset" do

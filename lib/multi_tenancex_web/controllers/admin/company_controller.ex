@@ -20,6 +20,7 @@ defmodule MultiTenancexWeb.Admin.CompanyController do
         conn
         |> put_flash(:info, "Company created successfully.")
         |> redirect(to: admin_company_path(conn, :show, company))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -44,6 +45,7 @@ defmodule MultiTenancexWeb.Admin.CompanyController do
         conn
         |> put_flash(:info, "Company updated successfully.")
         |> redirect(to: admin_company_path(conn, :show, company))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", company: company, changeset: changeset)
     end

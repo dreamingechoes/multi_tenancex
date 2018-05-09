@@ -1,7 +1,7 @@
 defmodule MultiTenancexWeb.PageController do
   use MultiTenancexWeb, :controller
 
-  def index(conn, _params), do: render conn, "index.html"
+  def index(conn, _params), do: render(conn, "index.html")
 
   @doc """
   Switch between tenants for an administrator.
@@ -15,7 +15,11 @@ defmodule MultiTenancexWeb.PageController do
         |> Map.put("current_admin_tenant", company_name)
 
       conn
-      |> Guardian.Plug.sign_in(%{administrator: current_admin(conn), company: company_name}, :access, claims)
+      |> Guardian.Plug.sign_in(
+        %{administrator: current_admin(conn), company: company_name},
+        :access,
+        claims
+      )
       |> put_flash(:info, gettext("You have successfuly switched tenant."))
       |> redirect(to: admin_dashboard_path(conn, :index))
     end

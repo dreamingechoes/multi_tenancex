@@ -9,9 +9,14 @@ defmodule MultiTenancexWeb.Admin.DashboardController do
   def index(conn, _params) do
     with companies <- Repo.aggregate(Company, :count, :id),
          administrators <- Repo.aggregate(Administrator, :count, :id),
-         products <- Repo.aggregate(Product, :count, :id)
-    do
-      render(conn, "index.html", companies: companies, administrators: administrators, products: products)
+         products <- Repo.aggregate(Product, :count, :id) do
+      render(
+        conn,
+        "index.html",
+        companies: companies,
+        administrators: administrators,
+        products: products
+      )
     end
   end
 
@@ -27,7 +32,11 @@ defmodule MultiTenancexWeb.Admin.DashboardController do
         |> Map.put("current_admin_tenant", company_name)
 
       conn
-      |> Guardian.Plug.sign_in(%{administrator: current_admin(conn), company: company_name}, :access, claims)
+      |> Guardian.Plug.sign_in(
+        %{administrator: current_admin(conn), company: company_name},
+        :access,
+        claims
+      )
       |> put_flash(:info, gettext("You have successfuly switched tenant."))
       |> redirect(to: admin_dashboard_path(conn, :index))
     end

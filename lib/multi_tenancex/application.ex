@@ -11,7 +11,7 @@ defmodule MultiTenancex.Application do
       # Start the Ecto repository
       supervisor(MultiTenancex.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(MultiTenancexWeb.Endpoint, []),
+      supervisor(MultiTenancexWeb.Endpoint, [])
       # Start your own worker by calling: MultiTenancex.Worker.start_link(arg1, arg2, arg3)
       # worker(MultiTenancex.Worker, [arg1, arg2, arg3]),
     ]

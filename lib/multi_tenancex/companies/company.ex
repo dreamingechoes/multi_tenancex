@@ -6,15 +6,15 @@ defmodule MultiTenancex.Companies.Company do
   @type t :: %__MODULE__{}
 
   schema "companies" do
-    field :description, :string
-    field :image,       :string
-    field :name,        :string
-    field :slug,        :string
+    field(:description, :string)
+    field(:image, :string)
+    field(:name, :string)
+    field(:slug, :string)
 
     timestamps()
 
     # Relations
-    has_many :products, MultiTenancex.Companies.Product
+    has_many(:products, MultiTenancex.Companies.Product)
   end
 
   @doc false

@@ -20,6 +20,7 @@ defmodule MultiTenancexWeb.Admin.ProductController do
         conn
         |> put_flash(:info, "Product created successfully.")
         |> redirect(to: admin_product_path(conn, :show, product))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -44,6 +45,7 @@ defmodule MultiTenancexWeb.Admin.ProductController do
         conn
         |> put_flash(:info, "Product updated successfully.")
         |> redirect(to: admin_product_path(conn, :show, product))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", product: product, changeset: changeset)
     end

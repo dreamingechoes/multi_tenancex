@@ -6,11 +6,11 @@ defmodule MultiTenancex.Accounts.Administrator do
   @type t :: %__MODULE__{}
 
   schema "administrators" do
-    field :email,               :string
-    field :firstname,           :string
-    field :lastname,            :string
-    field :encrypted_password,  :string
-    field :password,            :string, virtual: true
+    field(:email, :string)
+    field(:firstname, :string)
+    field(:lastname, :string)
+    field(:encrypted_password, :string)
+    field(:password, :string, virtual: true)
 
     timestamps()
   end
@@ -27,10 +27,17 @@ defmodule MultiTenancex.Accounts.Administrator do
 
   defp generate_encrypted_password(%Ecto.Changeset{valid?: true} = changeset) do
     case get_change(changeset, :password) do
-      nil -> changeset
+      nil ->
+        changeset
+
       password ->
-        put_change(changeset, :encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
+        put_change(
+          changeset,
+          :encrypted_password,
+          Comeonin.Bcrypt.hashpwsalt(password)
+        )
     end
   end
+
   defp generate_encrypted_password(changeset), do: changeset
 end

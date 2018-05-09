@@ -20,6 +20,7 @@ defmodule MultiTenancexWeb.Admin.AdministratorController do
         conn
         |> put_flash(:info, "Administrator created successfully.")
         |> redirect(to: admin_administrator_path(conn, :show, administrator))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -33,7 +34,13 @@ defmodule MultiTenancexWeb.Admin.AdministratorController do
   def edit(conn, %{"id" => id}) do
     administrator = Accounts.get_administrator!(id)
     changeset = Accounts.change_administrator(administrator)
-    render(conn, "edit.html", administrator: administrator, changeset: changeset)
+
+    render(
+      conn,
+      "edit.html",
+      administrator: administrator,
+      changeset: changeset
+    )
   end
 
   def update(conn, %{"id" => id, "administrator" => administrator_params}) do
@@ -44,8 +51,14 @@ defmodule MultiTenancexWeb.Admin.AdministratorController do
         conn
         |> put_flash(:info, "Administrator updated successfully.")
         |> redirect(to: admin_administrator_path(conn, :show, administrator))
+
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", administrator: administrator, changeset: changeset)
+        render(
+          conn,
+          "edit.html",
+          administrator: administrator,
+          changeset: changeset
+        )
     end
   end
 

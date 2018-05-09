@@ -8,5 +8,4 @@ defmodule MultiTenancexWeb.Plug.CurrentAdmin do
       assign(conn, :current_admin, current_admin)
     end
   end
-
 end
