@@ -5,7 +5,7 @@ defmodule MultiTenancex.Mixfile do
     [
       app: :multi_tenancex,
       version: "0.0.1",
-      elixir: "~> 1.5",
+      elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -43,29 +43,36 @@ defmodule MultiTenancex.Mixfile do
   defp deps do
     [
       # Default Phoenix stuff
-      {:phoenix, "~> 1.3.0"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
-      {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:cowboy, "~> 1.1.2"},
+      {:gettext, "~> 0.13.1"},
+      {:phoenix, "~> 1.3.2", override: true},
+      {:phoenix_ecto, "~> 3.3.0"},
+      {:postgrex, ">= 0.13.3"},
+      {:phoenix_pubsub, "~> 1.0.2"},
+
+      # Frontend
+      {:phoenix_html, "~> 2.10.4"},
+      {:phoenix_live_reload, "~> 1.1.1", only: :dev},
 
       # Authentication
-      {:comeonin, "~> 4.0"},
-      {:bcrypt_elixir, "~> 1.0", override: true},
-      {:guardian, "~> 0.14.0"},
+      {:comeonin, "~> 4.1.1"},
+      {:bcrypt_elixir, "~> 0.12"},
+      {:guardian, "~> 1.0"},
 
       # Code analysis
-      {:credo, "~> 0.8", only: [:dev, :test]},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:credo, "~> 0.9.0", only: [:dev, :test]},
+      {:dialyxir, "~> 0.5.1", only: [:dev], runtime: false},
 
       # Code documentation
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.16.4", only: :dev, runtime: false},
 
-      # Testing
-      {:excoveralls, "~> 0.6", only: [:test, :ci]}
+      # Random
+      {:timex, "~> 3.2.1"},
+
+      # Testing and seeding data
+      {:faker, "~> 0.9.0"},
+      {:excoveralls, "~> 0.7.3", only: [:test]},
+      {:exvcr, "~> 0.9.0", only: [:test]}
     ]
   end
 
