@@ -1,0 +1,19 @@
+# EditorConfig is awesome: http://EditorConfig.org
+# Check if your editor needs a plugin.
+
+# top-most EditorConfig file
+root = true
+
+# General config
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
+# The simple break line in markdown is done with doble whitespace at the end
+# of the line, so you shouldn't trim in markdown files
+[*.md]
+trim_trailing_whitespace = false
