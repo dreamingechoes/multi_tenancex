@@ -1,6 +1,7 @@
 defmodule MultiTenancexWeb.Admin.DashboardController do
   use MultiTenancexWeb, :controller
 
+  alias MultiTenancex.Guardian
   alias MultiTenancex.Accounts.Administrator
   alias MultiTenancex.Companies.Company
   alias MultiTenancex.Companies.Product

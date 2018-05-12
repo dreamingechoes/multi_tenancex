@@ -1,89 +1,36 @@
 defmodule MultiTenancexWeb.Admin.SessionController do
-  alias MultiTenancexWeb.AdminSession
+  alias MultiTenancex.Guardian
+  alias MultiTenancex.Guardian.Plug
 
   use MultiTenancexWeb, :controller
 
   plug(:put_layout, {MultiTenancexWeb.Admin.LayoutView, "admin_auth.html"})
 
-  @doc """
-  Displays the login form for administrators.
-  """
-  def new(conn, _params), do: render(conn, "new.html")
+  def new(conn, _), do: render(conn, "new.html")
 
-  @doc """
-  Creates a new session for an administrator.
-  """
-  def create(conn, %{"session" => session_params}) do
-    with company_name <- generate_name(session_params["company"]),
-         session_params <- Map.put(session_params, "company", company_name) do
-      case AdminSession.authenticate(session_params) do
-        {:ok, administrator} ->
-          claims =
-            Guardian.Claims.app_claims()
-            |> Map.put(:current_tenant, company_name)
+  def create(conn, %{
+        "session" => %{
+          "email" => email,
+          "password" => password
+        }
+      }) do
+    case Guardian.authenticate_user(email, password) do
+      {:ok, user} ->
+        conn
+        |> Plug.sign_in(user)
+        |> put_flash(:success, gettext("Welcome to Multi Tenancex!"))
+        |> redirect(to: page_path(conn, :index))
 
-          conn
-          |> Guardian.Plug.sign_in(
-            %{administrator: administrator, company: company_name},
-            :access,
-            claims
-          )
-          |> put_flash(:info, gettext("You have successfuly logged in."))
-          |> redirect(to: admin_dashboard_path(conn, :index))
-
-        :error ->
-          conn
-          |> put_flash(:error, gettext("Wrong email or password"))
-          |> put_status(:bad_request)
-          |> render("new.html")
-      end
+      {:error, message} ->
+        conn
+        |> put_flash(:error, message)
+        |> redirect(to: page_path(conn, :index))
     end
   end
 
-  @doc """
-  Deletes a session for an administrator.
-  """
-  def delete(conn, _params) do
+  def delete(conn, _) do
     conn
-    |> Guardian.Plug.sign_out()
-    |> put_flash(:info, gettext("You have successfuly logged out."))
-    |> redirect(to: admin_session_path(conn, :new))
-  end
-
-  @doc """
-  Redirects anonymous users to the login page.
-  """
-  def unauthenticated(conn, _params) do
-    conn
-    |> put_flash(
-      :error,
-      gettext("You must be logged in as an administrator to access this page.")
-    )
-    |> redirect(to: admin_session_path(conn, :new))
-  end
-
-  @doc """
-  Redirects already logged users to the index page.
-  """
-  def already_authenticated(conn, _params) do
-    conn
-    |> put_flash(:info, gettext("You are already authenticated."))
-    |> redirect(to: admin_dashboard_path(conn, :index))
-  end
-
-  @doc """
-  Redirects to the login page if the Administrator can not be loaded.
-  """
-  def no_resource(conn, _params) do
-    conn
-    |> put_flash(:error, gettext("You are not signed in."))
-    |> redirect(to: admin_session_path(conn, :new))
-  end
-
-  defp generate_name(name) do
-    name
-    |> String.split("_")
-    |> List.delete_at(0)
-    |> Enum.join("_")
+    |> Plug.sign_out()
+    |> redirect(to: page_path(conn, :index))
   end
 end

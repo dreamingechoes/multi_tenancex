@@ -9,63 +9,50 @@ defmodule MultiTenancexWeb.Router do
     plug(:put_secure_browser_headers)
   end
 
-  pipeline :api do
-    plug(:accepts, ["json"])
+  pipeline :browser_auth do
+    plug(MultiTenancexWeb.Guardian.AuthPipeline)
+    plug(MultiTenancexWeb.Plug.CurrentAdmin)
+  end
+
+  pipeline :browser_ensure_auth do
+    plug(Guardian.Plug.EnsureAuthenticated)
+    plug(MultiTenancexWeb.Plug.CurrentAdmin)
   end
 
   pipeline :admin_layout do
     plug(:put_layout, {MultiTenancexWeb.Admin.LayoutView, :admin})
   end
 
-  pipeline :browser_session do
-    # plug Guardian.Plug.VerifySession
-    # plug Guardian.Plug.LoadResource
-  end
-
-  pipeline :authenticated_admin do
-    # plug Guardian.Plug.EnsureAuthenticated, handler: MultiTenancexWeb.Admin.SessionController
-    # plug Guardian.Plug.EnsureResource, handler: MultiTenancexWeb.Admin.SessionController
-
-    # Custom plugs
-    plug(MultiTenancexWeb.Plug.CurrentAdmin)
-    plug(MultiTenancexWeb.Plug.CurrentTenant)
-  end
-
-  pipeline :unauthenticated_admin do
-    # plug Guardian.Plug.EnsureNotAuthenticated, handler: MultiTenancexWeb.Admin.SessionController
-  end
-
   scope "/", MultiTenancexWeb do
-    pipe_through(:browser)
-
-    get("/", PageController, :index)
-  end
-
-  # Admin scope
-  scope "/admin", MultiTenancexWeb.Admin, as: :admin do
-    pipe_through([:browser, :browser_session])
-
-    # Admin unauthenticated scope
+    # Application unauthenticated scope
     scope "/" do
-      pipe_through([:unauthenticated_admin])
+      pipe_through([:browser, :browser_auth])
 
-      resources("/session", SessionController, only: [:new, :create])
+      get("/", PageController, :index)
     end
 
-    # Admin authenticated scope
-    scope "/" do
-      pipe_through([:admin_layout, :authenticated_admin])
+    # Admin scope
+    scope "/admin", Admin, as: :admin do
+      pipe_through([:browser, :browser_auth])
 
-      # Log out resource
-      get("/logout", SessionController, :delete)
+      # Admin unauthenticated scope
+      resources("/session", SessionController, only: [:new, :create])
 
-      # Switch tenant resource
-      post("/switch_tenant", DashboardController, :switch_tenant)
+      # Admin authenticated scope
+      scope "/" do
+        pipe_through([:admin_layout, :browser_auth, :browser_ensure_auth])
 
-      resources("/", DashboardController, only: [:index])
-      resources("/administrators", AdministratorController)
-      resources("/companies", CompanyController)
-      resources("/products", ProductController)
+        # Log out resource
+        get("/logout", SessionController, :delete)
+
+        # Switch tenant resource
+        post("/switch_tenant", DashboardController, :switch_tenant)
+
+        resources("/", DashboardController, only: [:index])
+        resources("/administrators", AdministratorController)
+        resources("/companies", CompanyController)
+        resources("/products", ProductController)
+      end
     end
   end
 end

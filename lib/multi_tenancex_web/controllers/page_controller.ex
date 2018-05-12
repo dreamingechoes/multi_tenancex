@@ -1,6 +1,8 @@
 defmodule MultiTenancexWeb.PageController do
   use MultiTenancexWeb, :controller
 
+  alias MultiTenancex.Guardian
+
   def index(conn, _params), do: render(conn, "index.html")
 
   @doc """

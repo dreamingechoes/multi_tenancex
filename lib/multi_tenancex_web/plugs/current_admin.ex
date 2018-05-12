@@ -4,8 +4,10 @@ defmodule MultiTenancexWeb.Plug.CurrentAdmin do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    with current_admin <- Guardian.Plug.current_resource(conn) do
-      assign(conn, :current_admin, current_admin)
-    end
+    assign(
+      conn,
+      :current_admin,
+      MultiTenancex.Guardian.Plug.current_resource(conn)
+    )
   end
 end
