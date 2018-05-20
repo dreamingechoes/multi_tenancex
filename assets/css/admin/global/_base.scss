@@ -1,7 +1,13 @@
 body {
-  padding-top: 64px;
+  padding-top: 54px;
   font-size: 14px;
   background-color: #eee;
+
+  .container {
+    .main {
+      margin: 15px auto 30px;
+    }
+  }
 }
 
 @media (min-width: 992px) {
