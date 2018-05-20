@@ -21,14 +21,13 @@ defmodule MultiTenancex.Companies.Product do
   @doc false
   def changeset(%Product{} = product, attrs) do
     product
-    |> cast(attrs, [:name, :description, :image, :price, :units, :company_id])
+    |> cast(attrs, [:name, :description, :image, :price, :units])
     |> validate_required([
       :name,
       :description,
       :image,
       :price,
-      :units,
-      :company_id
+      :units
     ])
     |> assoc_constraint(:company)
   end
