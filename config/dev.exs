@@ -54,9 +54,6 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :guardian, Guardian,
-  secret_key: "eP/Fjhc5Ns4WsmYqBqwvC51oA0i/aXYeobBLn8V7Rrtyddfct48rimYbVQj28MAX"
-
 # Configure your database
 config :multi_tenancex, MultiTenancex.Repo,
   adapter: Ecto.Adapters.Postgres,

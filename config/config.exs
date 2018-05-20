@@ -23,14 +23,13 @@ config :logger, :console,
   metadata: [:request_id]
 
 # Guardian configuration
-config :guardian, Guardian,
-  allowed_algos: ["HS512"],
-  verify_module: Guardian.JWT,
-  issuer: "MultiTenancex",
-  ttl: {30, :days},
-  allowed_drift: 2000,
-  verify_issuer: true,
-  serializer: MultiTenancexWeb.GuardianSerializer
+config :multi_tenancex, MultiTenancex.Guardian,
+  issuer: "multi_tenancex",
+  secret_key: "eP/Fjhc5Ns4WsmYqBqwvC51oA0i/aXYeobBLn8V7Rrtyddfct48rimYbVQj28MAX"
+
+config :multi_tenancex, MultiTenancexWeb.AuthPipeline,
+  module: MultiTenancexWeb.Guardian,
+  error_handler: MultiTenancexWeb.AuthErrorHandler
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
