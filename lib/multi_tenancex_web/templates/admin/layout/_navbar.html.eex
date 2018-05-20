@@ -19,7 +19,7 @@
         <li class="nav-item">
           <%= link gettext("Products"), to: admin_product_path(@conn, :index), class: "nav-link" %>
         </li>
-        
+
         <li class="nav-item dropdown">
          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,7 +39,7 @@
           <%= link gettext("Home"), to: page_path(@conn, :index), class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link gettext("Logout"), to: admin_session_path(@conn, :delete), class: "nav-link" %>
+          <%= link gettext("Logout"), to: session_path(@conn, :delete), class: "nav-link" %>
         </li>
       </ul>
     </div>

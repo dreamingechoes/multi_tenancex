@@ -1,4 +1,4 @@
-<footer class="fixed-bottom">
+<footer>
   <div class="container">
     <p class="m-0 text-center text-white">
       Made with <i class="fa fa-heart"></i> by <%= link "dreamingechoes", to: "http://dreamingecho.es" %>

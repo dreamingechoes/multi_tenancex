@@ -29,30 +29,24 @@ defmodule MultiTenancexWeb.Router do
       pipe_through([:browser, :browser_auth])
 
       get("/", PageController, :index)
+
+      resources("/session", SessionController, only: [:new, :create])
+
+      # Log out resource
+      get("/logout", SessionController, :delete)
     end
 
     # Admin scope
     scope "/admin", Admin, as: :admin do
-      pipe_through([:browser, :browser_auth])
+      pipe_through([:browser, :browser_auth, :browser_ensure_auth, :admin_layout])
 
-      # Admin unauthenticated scope
-      resources("/session", SessionController, only: [:new, :create])
+      # Switch tenant resource
+      post("/switch_tenant", DashboardController, :switch_tenant)
 
-      # Admin authenticated scope
-      scope "/" do
-        pipe_through([:admin_layout, :browser_auth, :browser_ensure_auth])
-
-        # Log out resource
-        get("/logout", SessionController, :delete)
-
-        # Switch tenant resource
-        post("/switch_tenant", DashboardController, :switch_tenant)
-
-        resources("/", DashboardController, only: [:index])
-        resources("/administrators", AdministratorController)
-        resources("/companies", CompanyController)
-        resources("/products", ProductController)
-      end
+      resources("/", DashboardController, only: [:index])
+      resources("/administrators", AdministratorController)
+      resources("/companies", CompanyController)
+      resources("/products", ProductController)
     end
   end
 end

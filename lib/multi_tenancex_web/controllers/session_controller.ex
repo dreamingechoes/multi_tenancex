@@ -1,4 +1,4 @@
-defmodule MultiTenancexWeb.Admin.SessionController do
+defmodule MultiTenancexWeb.SessionController do
   alias MultiTenancex.Guardian
   alias MultiTenancex.Guardian.Plug
 
@@ -24,7 +24,7 @@ defmodule MultiTenancexWeb.Admin.SessionController do
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: session_path(conn, :new))
     end
   end
 
