@@ -1,5 +1,3 @@
-<h2>New company</h2>
+<h2><%= gettext("New company") %></h2>
 
 <%= render "form.html", Map.put(assigns, :action, admin_company_path(@conn, :create)) %>
-
-<span><%= link "Back", to: admin_company_path(@conn, :index) %></span>

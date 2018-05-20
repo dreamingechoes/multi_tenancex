@@ -1,34 +1,39 @@
-<h2>Listing Products</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Image</th>
-      <th>Price</th>
-      <th>Units</th>
+<h2><%= gettext("List of products") %></h2>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for product <- @products do %>
-    <tr>
-      <td><%= product.name %></td>
-      <td><%= product.description %></td>
-      <td><%= product.image %></td>
-      <td><%= product.price %></td>
-      <td><%= product.units %></td>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col"><%= gettext("Name") %></th>
+          <th scope="col"><%= gettext("Price") %></th>
+          <th scope="col"><%= gettext("Units") %></th>
+          <th scope="col"><%= gettext("Image") %></th>
+          <th scope="col">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%= for product <- @products do %>
+        <tr>
+          <th scope="row"><%= product.id %></th>
+          <td><%= product.name %></td>
+          <td><%= product.price %></td>
+          <td><%= product.units %></td>
+          <td><%= product.image %></td>
 
-      <td class="text-right">
-        <span><%= link "Show", to: admin_product_path(@conn, :show, product), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: admin_product_path(@conn, :edit, product), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: admin_product_path(@conn, :delete, product), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+          <td class="text-right">
+            <%= link gettext("Show"), to: admin_product_path(@conn, :show, product), class: "btn btn-success btn-md" %>
+            <%= link gettext("Edit"), to: admin_product_path(@conn, :edit, product), class: "btn btn-info btn-md" %>
+            <%= link gettext("Delete"), to: admin_product_path(@conn, :delete, product),
+              method: :delete, data: [confirm: gettext("Are you sure?")], class: "btn btn-danger btn-md" %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<span><%= link "New Product", to: admin_product_path(@conn, :new) %></span>
+    <%= link gettext("New product"), to: admin_product_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
+</div>

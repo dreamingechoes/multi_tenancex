@@ -1,5 +1,3 @@
-<h2>New Administrator</h2>
+<h2><%= gettext("New administrator") %></h2>
 
 <%= render "form.html", Map.put(assigns, :action, admin_administrator_path(@conn, :create)) %>
-
-<span><%= link "Back", to: admin_administrator_path(@conn, :index) %></span>

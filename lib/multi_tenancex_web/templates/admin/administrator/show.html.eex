@@ -1,23 +1,25 @@
-<h2>Show Administrator</h2>
+<h2><%= gettext("Show administrator") %></h2>
 
-<ul>
+<div class="card">
+  <div class="card-body">
+    <ul>
+      <li>
+        <strong><%= gettext("First Name:") %></strong>
+        <%= @administrator.firstname %>
+      </li>
 
-  <li>
-    <strong>Firstname:</strong>
-    <%= @administrator.firstname %>
-  </li>
+      <li>
+        <strong><%= gettext("Last Name:") %></strong>
+        <%= @administrator.lastname %>
+      </li>
 
-  <li>
-    <strong>Lastname:</strong>
-    <%= @administrator.lastname %>
-  </li>
+      <li>
+        <strong><%= gettext("Email:") %></strong>
+        <%= @administrator.email %>
+      </li>
+    </ul>
 
-  <li>
-    <strong>Email:</strong>
-    <%= @administrator.email %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: admin_administrator_path(@conn, :edit, @administrator) %></span>
-<span><%= link "Back", to: admin_administrator_path(@conn, :index) %></span>
+    <%= link gettext("Edit"), to: admin_administrator_path(@conn, :edit, @administrator), class: "btn btn-primary" %>
+    <%= link gettext("Back"), to: admin_administrator_path(@conn, :index), class: "btn btn-light" %>
+  </div>
+</div>

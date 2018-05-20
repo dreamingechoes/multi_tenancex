@@ -1,30 +1,37 @@
-<h2>Listing companies</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Slug</th>
-      <th>Image</th>
+<h2><%= gettext("List of companies") %></h2>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for company <- @companies do %>
-    <tr>
-      <td><%= company.name %></td>
-      <td><%= company.slug %></td>
-      <td><%= company.image %></td>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col"><%= gettext("Name") %></th>
+          <th scope="col"><%= gettext("Slug") %></th>
+          <th scope="col"><%= gettext("Image") %></th>
+          <th scope="col">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%= for company <- @companies do %>
+        <tr>
+          <th scope="row"><%= company.id %></th>
+          <td><%= company.name %></td>
+          <td><%= company.slug %></td>
+          <td><%= company.image %></td>
 
-      <td class="text-right">
-        <span><%= link "Show", to: admin_company_path(@conn, :show, company), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: admin_company_path(@conn, :edit, company), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: admin_company_path(@conn, :delete, company), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+          <td class="text-right">
+            <%= link gettext("Show"), to: admin_company_path(@conn, :show, company), class: "btn btn-success btn-md" %>
+            <%= link gettext("Edit"), to: admin_company_path(@conn, :edit, company), class: "btn btn-info btn-md" %>
+            <%= link gettext("Delete"), to: admin_company_path(@conn, :delete, company),
+              method: :delete, data: [confirm: gettext("Are you sure?")], class: "btn btn-danger btn-md" %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
 
-<span><%= link "New company", to: admin_company_path(@conn, :new) %></span>
+    <%= link gettext("New company"), to: admin_company_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,5 +1,3 @@
-<h2>Edit Administrator</h2>
+<h2><%= gettext("Edit company") %></h2>
 
-<%= render "form.html", Map.put(assigns, :action, admin_administrator_path(@conn, :update, @administrator)) %>
-
-<span><%= link "Back", to: admin_administrator_path(@conn, :index) %></span>
+<%= render "form.html", Map.put(assigns, :action, admin_company_path(@conn, :update, @company)) %>

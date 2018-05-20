@@ -18,8 +18,8 @@
   <body>
     <%= render("_navbar.html", assigns) %>
     <div class="container">
-      <%= render("_flash_messages.html", assigns) %>
       <main role="main">
+        <%= render("_flash_messages.html", assigns) %>
         <%= render @view_module, @view_template, assigns %>
       </main>
     </div>

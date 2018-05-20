@@ -1,33 +1,35 @@
-<h2>Show Product</h2>
+<h2><%= gettext("Show product") %></h2>
 
-<ul>
+<div class="card">
+  <div class="card-body">
+    <ul>
+      <li>
+        <strong><%= gettext("Name:") %></strong>
+        <%= @product.name %>
+      </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @product.name %>
-  </li>
+      <li>
+        <strong><%= gettext("Price:") %></strong>
+        <%= @product.price %>
+      </li>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @product.description %>
-  </li>
+      <li>
+        <strong><%= gettext("Units:") %></strong>
+        <%= @product.units %>
+      </li>
 
-  <li>
-    <strong>Image:</strong>
-    <%= @product.image %>
-  </li>
+      <li>
+        <strong><%= gettext("Image:") %></strong>
+        <%= @product.image %>
+      </li>
 
-  <li>
-    <strong>Price:</strong>
-    <%= @product.price %>
-  </li>
+      <li>
+        <strong><%= gettext("Description:") %></strong>
+        <%= @product.description %>
+      </li>
+    </ul>
 
-  <li>
-    <strong>Units:</strong>
-    <%= @product.units %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: admin_product_path(@conn, :edit, @product) %></span>
-<span><%= link "Back", to: admin_product_path(@conn, :index) %></span>
+    <%= link gettext("Edit"), to: admin_product_path(@conn, :edit, @product), class: "btn btn-primary" %>
+    <%= link gettext("Back"), to: admin_product_path(@conn, :index), class: "btn btn-light" %>
+  </div>
+</div>
