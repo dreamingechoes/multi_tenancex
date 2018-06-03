@@ -4,10 +4,12 @@ defmodule MultiTenancexWeb.Plug.CurrentTenant do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    assign(
-      conn,
-      :current_tenant,
-      MultiTenancex.Guardian.Plug.current_resource(conn)
-    )
+    case Guardian.Plug.current_claims(conn) do
+      %{"current_tenant" => current_tenant} ->
+        assign(conn, :current_tenant, current_tenant)
+
+      _ ->
+        conn
+    end
   end
 end

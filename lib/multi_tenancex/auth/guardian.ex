@@ -16,7 +16,7 @@ defmodule MultiTenancex.Guardian do
     {:ok, resource}
   end
 
-  def authenticate_user(email, password) do
+  def authenticate_administrator(email, password) do
     email
     |> Accounts.get_administrator_by_email()
     |> check_password(password)

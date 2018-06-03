@@ -10,14 +10,15 @@ defmodule MultiTenancexWeb.SessionController do
 
   def create(conn, %{
         "session" => %{
+          "tenant" => tenant,
           "email" => email,
           "password" => password
         }
       }) do
-    case Guardian.authenticate_user(email, password) do
-      {:ok, user} ->
+    case Guardian.authenticate_administrator(email, password) do
+      {:ok, administrator} ->
         conn
-        |> Plug.sign_in(user)
+        |> Plug.sign_in(administrator, %{current_tenant: tenant})
         |> put_flash(:success, gettext("Welcome to Multi Tenancex!"))
         |> redirect(to: page_path(conn, :index))
 
