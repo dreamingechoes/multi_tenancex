@@ -5,7 +5,7 @@ defmodule MultiTenancexWeb.Admin.CompanyController do
   alias MultiTenancex.Companies.Company
 
   def index(conn, _params) do
-    companies = Companies.list_companies()
+    companies = Companies.list_companies(conn.assigns.current_tenant)
     render(conn, "index.html", companies: companies)
   end
 
@@ -27,20 +27,24 @@ defmodule MultiTenancexWeb.Admin.CompanyController do
   end
 
   def show(conn, %{"id" => id}) do
-    company = Companies.get_company!(id)
+    company = Companies.get_company!(id, conn.assigns.current_tenant)
     render(conn, "show.html", company: company)
   end
 
   def edit(conn, %{"id" => id}) do
-    company = Companies.get_company!(id)
+    company = Companies.get_company!(id, conn.assigns.current_tenant)
     changeset = Companies.change_company(company)
     render(conn, "edit.html", company: company, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "company" => company_params}) do
-    company = Companies.get_company!(id)
+    company = Companies.get_company!(id, conn.assigns.current_tenant)
 
-    case Companies.update_company(company, company_params) do
+    case Companies.update_company(
+           company,
+           company_params,
+           conn.assigns.current_tenant
+         ) do
       {:ok, company} ->
         conn
         |> put_flash(:info, "Company updated successfully.")
@@ -52,8 +56,10 @@ defmodule MultiTenancexWeb.Admin.CompanyController do
   end
 
   def delete(conn, %{"id" => id}) do
-    company = Companies.get_company!(id)
-    {:ok, _company} = Companies.delete_company(company)
+    company = Companies.get_company!(id, conn.assigns.current_tenant)
+
+    {:ok, _company} =
+      Companies.delete_company(company, conn.assigns.current_tenant)
 
     conn
     |> put_flash(:info, "Company deleted successfully.")
