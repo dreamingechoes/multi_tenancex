@@ -12,11 +12,13 @@ defmodule MultiTenancexWeb.Router do
   pipeline :browser_auth do
     plug(MultiTenancexWeb.Guardian.AuthPipeline)
     plug(MultiTenancexWeb.Plug.CurrentAdmin)
+    plug(MultiTenancexWeb.Plug.CurrentTenant)
   end
 
   pipeline :browser_ensure_auth do
     plug(Guardian.Plug.EnsureAuthenticated)
     plug(MultiTenancexWeb.Plug.CurrentAdmin)
+    plug(MultiTenancexWeb.Plug.CurrentTenant)
   end
 
   pipeline :admin_layout do
@@ -38,7 +40,12 @@ defmodule MultiTenancexWeb.Router do
 
     # Admin scope
     scope "/admin", Admin, as: :admin do
-      pipe_through([:browser, :browser_auth, :browser_ensure_auth, :admin_layout])
+      pipe_through([
+        :browser,
+        :browser_auth,
+        :browser_ensure_auth,
+        :admin_layout
+      ])
 
       # Switch tenant resource
       post("/switch_tenant", DashboardController, :switch_tenant)
