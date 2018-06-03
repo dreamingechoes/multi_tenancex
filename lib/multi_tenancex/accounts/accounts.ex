@@ -38,8 +38,9 @@ defmodule MultiTenancex.Accounts do
   def get_administrator!(id), do: Repo.get!(Administrator, id)
 
   def get_administrator_by_email(email) do
-    from(a in Administrator, where: a.email == ^email)
-    |> Repo.one()
+    query = from(a in Administrator, where: a.email == ^email)
+
+    Repo.one(query)
   end
 
   @doc """

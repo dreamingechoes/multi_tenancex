@@ -4,21 +4,23 @@ defmodule MultiTenancex.Companies do
   """
 
   import Ecto.Query, warn: false
-  alias MultiTenancex.Repo
 
   alias MultiTenancex.Companies.Company
+  alias MultiTenancex.Companies.Product
+  alias MultiTenancex.Repo
+  alias MultiTenancex.TenantActions
 
   @doc """
   Returns the list of companies.
 
   ## Examples
 
-      iex> list_companies()
+      iex> list_companies(tenant)
       [%Company{}, ...]
 
   """
-  def list_companies do
-    Repo.all(Company)
+  def list_companies(tenant) do
+    Repo.all(Company, prefix: tenant)
   end
 
   @doc """
@@ -28,14 +30,35 @@ defmodule MultiTenancex.Companies do
 
   ## Examples
 
-      iex> get_company!(123)
+      iex> get_company!(123, tenant)
       %Company{}
 
-      iex> get_company!(456)
+      iex> get_company!(456, tenant)
       ** (Ecto.NoResultsError)
 
   """
-  def get_company!(id), do: Repo.get!(Company, id)
+  def get_company!(id, tenant), do: Repo.get!(Company, id, prefix: tenant)
+
+  @doc """
+  Gets a single company by slug.
+
+  Raises `Ecto.NoResultsError` if the Company does not exist.
+
+  ## Examples
+
+      iex> get_company!(slug, tenant)
+      %Company{}
+
+      iex> get_company!(slug, tenant)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_company_by_slug!(slug, tenant) do
+    query =
+      from(company in Company, where: company.slug == ^slug, preload: :products)
+
+    Repo.one!(query, prefix: tenant)
+  end
 
   @doc """
   Creates a company.
@@ -50,9 +73,19 @@ defmodule MultiTenancex.Companies do
 
   """
   def create_company(attrs \\ %{}) do
-    %Company{}
-    |> Company.changeset(attrs)
-    |> Repo.insert()
+    changeset = Company.changeset(%Company{}, attrs)
+
+    if changeset.valid? do
+      tenant = Ecto.Changeset.get_field(changeset, :slug)
+
+      Repo.transaction(fn ->
+        TenantActions.new_tenant(Repo, tenant)
+
+        Repo.insert!(changeset, prefix: TenantActions.build_prefix(tenant))
+      end)
+    else
+      {:error, changeset}
+    end
   end
 
   @doc """
@@ -60,17 +93,17 @@ defmodule MultiTenancex.Companies do
 
   ## Examples
 
-      iex> update_company(company, %{field: new_value})
+      iex> update_company(company, %{field: new_value}, tenant)
       {:ok, %Company{}}
 
-      iex> update_company(company, %{field: bad_value})
+      iex> update_company(company, %{field: bad_value}, tenant)
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_company(%Company{} = company, attrs) do
+  def update_company(%Company{} = company, attrs, tenant) do
     company
     |> Company.changeset(attrs)
-    |> Repo.update()
+    |> Repo.update(prefix: tenant)
   end
 
   @doc """
@@ -78,15 +111,20 @@ defmodule MultiTenancex.Companies do
 
   ## Examples
 
-      iex> delete_company(company)
+      iex> delete_company(company, tenant)
       {:ok, %Company{}}
 
-      iex> delete_company(company)
+      iex> delete_company(company, tenant)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_company(%Company{} = company) do
-    Repo.delete(company)
+  def delete_company(%Company{} = company, tenant) do
+    Repo.transaction(fn ->
+      Repo.delete(company, prefix: tenant)
+
+      # We have to delete company tenat
+      TenantActions.drop_schema(Repo, tenant)
+    end)
   end
 
   @doc """
@@ -102,19 +140,33 @@ defmodule MultiTenancex.Companies do
     Company.changeset(company, %{})
   end
 
-  alias MultiTenancex.Companies.Product
+  @doc """
+  Returns the slug for a company from a tenant id.
+
+  ## Examples
+
+      iex> get_company_slug(tenant)
+      "company_name"
+
+  """
+  def get_company_slug(tenant) do
+    tenant
+    |> String.split("_")
+    |> List.delete_at(0)
+    |> Enum.join("_")
+  end
 
   @doc """
   Returns the list of products.
 
   ## Examples
 
-      iex> list_products()
+      iex> list_products(tenant)
       [%Product{}, ...]
 
   """
-  def list_products do
-    Repo.all(Product)
+  def list_products(tenant) do
+    Repo.all(Product, prefix: tenant)
   end
 
   @doc """
@@ -124,31 +176,31 @@ defmodule MultiTenancex.Companies do
 
   ## Examples
 
-      iex> get_product!(123)
+      iex> get_product!(123, tenant)
       %Product{}
 
-      iex> get_product!(456)
+      iex> get_product!(456, tenant)
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id)
+  def get_product!(id, tenant), do: Repo.get!(Product, id, prefix: tenant)
 
   @doc """
   Creates a product.
 
   ## Examples
 
-      iex> create_product(%{field: value})
+      iex> create_product(%{field: value}, tenant)
       {:ok, %Product{}}
 
-      iex> create_product(%{field: bad_value})
+      iex> create_product(%{field: bad_value}, tenant)
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_product(attrs \\ %{}) do
+  def create_product(attrs \\ %{}, tenant) do
     %Product{}
     |> Product.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(prefix: tenant)
   end
 
   @doc """
@@ -156,17 +208,17 @@ defmodule MultiTenancex.Companies do
 
   ## Examples
 
-      iex> update_product(product, %{field: new_value})
+      iex> update_product(product, %{field: new_value}, tenant)
       {:ok, %Product{}}
 
-      iex> update_product(product, %{field: bad_value})
+      iex> update_product(product, %{field: bad_value}, tenant)
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_product(%Product{} = product, attrs) do
+  def update_product(%Product{} = product, attrs, tenant) do
     product
     |> Product.changeset(attrs)
-    |> Repo.update()
+    |> Repo.update(prefix: tenant)
   end
 
   @doc """
@@ -174,15 +226,15 @@ defmodule MultiTenancex.Companies do
 
   ## Examples
 
-      iex> delete_product(product)
+      iex> delete_product(product, tenant)
       {:ok, %Product{}}
 
-      iex> delete_product(product)
+      iex> delete_product(product, tenant)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_product(%Product{} = product) do
-    Repo.delete(product)
+  def delete_product(%Product{} = product, tenant) do
+    Repo.delete(product, prefix: tenant)
   end
 
   @doc """
