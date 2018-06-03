@@ -23,7 +23,6 @@ defmodule MultiTenancexWeb do
       import Plug.Conn
       import MultiTenancexWeb.Router.Helpers
       import MultiTenancexWeb.Gettext
-      import MultiTenancexWeb.HelperController
     end
   end
 
@@ -42,7 +41,6 @@ defmodule MultiTenancexWeb do
       import MultiTenancexWeb.Router.Helpers
       import MultiTenancexWeb.ErrorHelpers
       import MultiTenancexWeb.Gettext
-      import MultiTenancexWeb.HelperController
     end
   end
 
