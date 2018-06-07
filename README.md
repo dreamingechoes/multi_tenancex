@@ -7,6 +7,30 @@ There's an example user in the seeds to use for testing purposes:
 - **email**: example@example.com
 - **password**: 123456
 
+## Special database multi tenant mix tasks
+
+If you want to **create** some migration for every tenant:
+
+
+```
+> docker-compose run multi_tenancex mix multi_tenancex.gen.tenant_migration create_some_table
+```
+
+
+If you want to **migrate** the migrations for every tenant:
+
+
+```
+> docker-compose run multi_tenancex mix multi_tenancex.ecto.migrate_tenants
+```
+
+If you want to **rollback** the migrations for every tenant:
+
+
+```
+> docker-compose run multi_tenancex mix multi_tenancex.ecto.rollback_tenants
+```
+
 ## Setup development environment with Docker
 
 This project is Docker friendly from day one. To start working on it:
