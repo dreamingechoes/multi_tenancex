@@ -9,12 +9,14 @@ defmodule MultiTenancex.AccountsTest do
     @valid_attrs %{
       email: "some email",
       firstname: "some firstname",
-      lastname: "some lastname"
+      lastname: "some lastname",
+      password: "123456"
     }
     @update_attrs %{
       email: "some updated email",
       firstname: "some updated firstname",
-      lastname: "some updated lastname"
+      lastname: "some updated lastname",
+      password: "other_password"
     }
     @invalid_attrs %{email: nil, firstname: nil, lastname: nil}
 
@@ -24,7 +26,7 @@ defmodule MultiTenancex.AccountsTest do
         |> Enum.into(@valid_attrs)
         |> Accounts.create_administrator()
 
-      administrator
+      %Administrator{administrator | password: nil}
     end
 
     test "list_administrators/0 returns all administrators" do
