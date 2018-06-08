@@ -122,7 +122,7 @@ defmodule MultiTenancex.Companies do
     Repo.transaction(fn ->
       Repo.delete(company, prefix: tenant)
 
-      # We have to delete company tenat
+      # We have to delete the company tenant
       TenantActions.drop_schema(Repo, tenant)
     end)
   end
