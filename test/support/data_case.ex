@@ -32,7 +32,7 @@ defmodule MultiTenancex.DataCase do
       Ecto.Adapters.SQL.Sandbox.mode(MultiTenancex.Repo, {:shared, self()})
     end
 
-    :ok
+    {:ok, tenant: "tenant_some_name"}
   end
 
   @doc """
