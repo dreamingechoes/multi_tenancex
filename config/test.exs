@@ -16,4 +16,5 @@ config :multi_tenancex, MultiTenancex.Repo,
   password: "postgres",
   database: "multi_tenancex_test",
   hostname: "db",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox,
+  timeout: 60_000
