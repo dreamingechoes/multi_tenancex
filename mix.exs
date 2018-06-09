@@ -71,8 +71,7 @@ defmodule MultiTenancex.Mixfile do
 
       # Testing and seeding data
       {:faker, "~> 0.9.0"},
-      {:excoveralls, "~> 0.7.3", only: [:test]},
-      {:exvcr, "~> 0.9.0", only: [:test]}
+      {:excoveralls, "~> 0.7.3", only: [:test]}
     ]
   end
 
