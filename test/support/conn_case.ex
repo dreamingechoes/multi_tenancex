@@ -23,6 +23,19 @@ defmodule MultiTenancexWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint MultiTenancexWeb.Endpoint
+
+      def log_in(administrator),
+        do: log_in(Phoenix.ConnTest.build_conn(), administrator)
+
+      def log_in(conn, administrator) do
+        MultiTenancex.Guardian.Plug.sign_in(
+          conn,
+          administrator,
+          %{
+            current_tenant: "tenant_some_name"
+          }
+        )
+      end
     end
   end
 
@@ -33,6 +46,14 @@ defmodule MultiTenancexWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(MultiTenancex.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    {:ok, administrator} =
+      MultiTenancex.Accounts.create_administrator(%{
+        email: "example@example.com",
+        firstname: "some first name",
+        lastname: "some last name",
+        password: "123456"
+      })
+
+    {:ok, conn: Phoenix.ConnTest.build_conn(), administrator: administrator}
   end
 end

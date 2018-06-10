@@ -8,7 +8,8 @@ defmodule MultiTenancexWeb.ProductControllerTest do
     image: "some image",
     name: "some name",
     price: 120.5,
-    units: 42
+    units: 42,
+    company_id: 1
   }
   @update_attrs %{
     description: "some updated description",
@@ -26,41 +27,57 @@ defmodule MultiTenancexWeb.ProductControllerTest do
   }
 
   def fixture(:product) do
-    {:ok, product} = Companies.create_product(@create_attrs)
+    {:ok, product} = Companies.create_product(@create_attrs, "tenant_some_name")
     product
   end
 
   describe "index" do
-    test "lists all products", %{conn: conn} do
-      conn = get(conn, admin_product_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Products"
+    test "lists all products", %{conn: conn, administrator: administrator} do
+      conn = get(log_in(administrator), admin_product_path(conn, :index))
+
+      assert html_response(conn, 200) =~ "List of products"
     end
   end
 
   describe "new product" do
-    test "renders form", %{conn: conn} do
-      conn = get(conn, admin_product_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Product"
+    test "renders form", %{conn: conn, administrator: administrator} do
+      conn = get(log_in(administrator), admin_product_path(conn, :new))
+
+      assert html_response(conn, 200) =~ "New product"
     end
   end
 
   describe "create product" do
-    test "redirects to show when data is valid", %{conn: conn} do
+    test "redirects to show when data is valid", %{
+      conn: conn,
+      administrator: administrator
+    } do
       conn =
-        post(conn, admin_product_path(conn, :create), product: @create_attrs)
+        post(
+          log_in(administrator),
+          admin_product_path(conn, :create),
+          product: @create_attrs
+        )
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == admin_product_path(conn, :show, id)
 
-      conn = get(conn, admin_product_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Product"
+      conn = get(log_in(administrator), admin_product_path(conn, :show, id))
+      assert html_response(conn, 200) =~ "Show product"
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
+    test "renders errors when data is invalid", %{
+      conn: conn,
+      administrator: administrator
+    } do
       conn =
-        post(conn, admin_product_path(conn, :create), product: @invalid_attrs)
+        post(
+          log_in(administrator),
+          admin_product_path(conn, :create),
+          product: @invalid_attrs
+        )
 
-      assert html_response(conn, 200) =~ "New Product"
+      assert html_response(conn, 200) =~ "New product"
     end
   end
 
@@ -69,57 +86,72 @@ defmodule MultiTenancexWeb.ProductControllerTest do
 
     test "renders form for editing chosen product", %{
       conn: conn,
+      administrator: administrator,
       product: product
     } do
-      conn = get(conn, admin_product_path(conn, :edit, product))
-      assert html_response(conn, 200) =~ "Edit Product"
+      conn =
+        get(log_in(administrator), admin_product_path(conn, :edit, product))
+
+      assert html_response(conn, 200) =~ "Edit product"
     end
   end
 
   describe "update product" do
     setup [:create_product]
 
-    test "redirects when data is valid", %{conn: conn, product: product} do
+    test "redirects when data is valid", %{
+      conn: conn,
+      administrator: administrator,
+      product: product
+    } do
       conn =
         put(
-          conn,
+          log_in(administrator),
           admin_product_path(conn, :update, product),
           product: @update_attrs
         )
 
       assert redirected_to(conn) == admin_product_path(conn, :show, product)
 
-      conn = get(conn, admin_product_path(conn, :show, product))
+      conn =
+        get(log_in(administrator), admin_product_path(conn, :show, product))
+
       assert html_response(conn, 200) =~ "some updated description"
     end
 
-    test "renders errors when data is invalid", %{conn: conn, product: product} do
+    test "renders errors when data is invalid", %{
+      conn: conn,
+      administrator: administrator,
+      product: product
+    } do
       conn =
         put(
-          conn,
+          log_in(administrator),
           admin_product_path(conn, :update, product),
           product: @invalid_attrs
         )
 
-      assert html_response(conn, 200) =~ "Edit Product"
+      assert html_response(conn, 200) =~ "Edit product"
     end
   end
 
   describe "delete product" do
     setup [:create_product]
 
-    test "deletes chosen product", %{conn: conn, product: product} do
-      conn = delete(conn, admin_product_path(conn, :delete, product))
-      assert redirected_to(conn) == admin_product_path(conn, :index)
+    test "deletes chosen product", %{
+      conn: conn,
+      administrator: administrator,
+      product: product
+    } do
+      conn =
+        delete(
+          log_in(administrator),
+          admin_product_path(conn, :delete, product)
+        )
 
-      assert_error_sent(404, fn ->
-        get(conn, admin_product_path(conn, :show, product))
-      end)
+      assert redirected_to(conn) == admin_product_path(conn, :index)
     end
   end
 
-  defp create_product(_) do
-    product = fixture(:product)
-    {:ok, product: product}
-  end
+  defp create_product(_), do: {:ok, product: fixture(:product)}
 end
