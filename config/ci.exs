@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :multi_tenancex, MultiTenancex.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "ubuntu",
-  password: "ubuntu",
+  password: "",
   database: "circle_test",
   hostname: "127.0.0.1",
   pool: Ecto.Adapters.SQL.Sandbox
