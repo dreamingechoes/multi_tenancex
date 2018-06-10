@@ -1,19 +1,31 @@
-# Elixir CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-elixir/ for more details
 version: 2
 jobs:
   build:
     working_directory: ~/multi_tenancex
     docker:
       - image: circleci/elixir:1.6.5
+        environment:
+          - MIX_ENV=ci
       - image: postgres:9.5
         environment:
-          POSTGRES_USER: ubuntu
+          - POSTGRES_USER=ubuntu
+          - POSTGRES_PASSWORD=
+          - POSTGRES_DB=circle_test
     steps:
       - checkout
-      - run: mix local.rebar --force
+      - restore_cache:
+          keys:
+            - v1-mix-build-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-build-cache-{{ .Branch }}
       - run: mix local.hex --force
-      - run: mix deps.get
-      - run: mix ecto.create
+      - run: mix local.rebar --force
+      - run: mix do deps.get, compile --warnings-as-errors
+      - run: mix credo list --strict --format=oneline
+      - run: mix format --check-formatted
+      - run: mix do ecto.create, ecto.migrate
       - run: mix test
+      - save_cache:
+          key: v1-mix-build-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths:
+            - "deps"
+            - "_build"
