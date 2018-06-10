@@ -28,3 +28,6 @@ npm-debug.log
 
 # Elixir Ls files
 /.elixir_ls
+
+# ExCoveralls files
+/cover
