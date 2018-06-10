@@ -1,5 +1,7 @@
 # MultiTenancex
 
+[![CircleCI](https://circleci.com/gh/dreamingechoes/multi_tenancex.svg?style=shield)](https://circleci.com/gh/dreamingechoes/multi_tenancex)
+
 Example of Phoenix application with database multi tenancy.
 
 There's an example user in the seeds to use for testing purposes:
@@ -39,7 +41,7 @@ This project is Docker friendly from day one. To start working on it:
 * Install dependencies with `docker-compose run multi_tenancex mix deps.get`.
 * Create your database with `docker-compose run multi_tenancex mix ecto.create`.
 * Migrate your database with `docker-compose run multi_tenancex mix ecto.migrate`.
-* Run seeds for defautl data with `docker-compose run multi_tenancex mix run priv/repo/seeds.exs`.
+* Run seeds for default data with `docker-compose run multi_tenancex mix run priv/repo/seeds.exs`.
 * Install Node.js dependencies with `docker-compose run multi_tenancex bash -c "cd assets; npm install"`.
 * Start the application with `docker-compose up`
 
