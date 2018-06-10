@@ -20,7 +20,6 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix do deps.get, compile --warnings-as-errors
-      - run: mix credo list --strict --format=oneline
       - run: mix format --check-formatted
       - run: mix do ecto.create, ecto.migrate
       - run: mix test
