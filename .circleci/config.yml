@@ -6,7 +6,7 @@ jobs:
   build:
     working_directory: ~/multi_tenancex
     docker:
-      - image: circleci/elixir:1.6.4
+      - image: circleci/elixir:1.6.5
       - image: postgres:9.5
         environment:
           POSTGRES_USER: ubuntu
@@ -16,4 +16,4 @@ jobs:
       - run: mix local.hex --force
       - run: mix deps.get
       - run: mix ecto.create
-      - run: mix coveralls.html
+      - run: mix test
