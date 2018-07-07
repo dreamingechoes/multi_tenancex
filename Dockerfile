@@ -20,6 +20,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 # Download and install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && apt-get install -y nodejs
+RUN npm i npm@latest -g
 
 # Download and install Erlang package
 RUN wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
