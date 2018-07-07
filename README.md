@@ -9,7 +9,7 @@ There's an example user in the seeds to use for testing purposes:
 - **email**: example@example.com
 - **password**: 123456
 
-## Special database multi tenant mix tasks
+## Special database multi-tenant mix tasks
 
 If you want to **create** some migration for every tenant:
 
