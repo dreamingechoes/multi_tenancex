@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/dreamingechoes/multi_tenancex.svg?style=shield)](https://circleci.com/gh/dreamingechoes/multi_tenancex)
 
-Example of Phoenix application with database multi tenancy.
+Example of Phoenix application with database multi-tenancy.
 
 There's an example user in the seeds to use for testing purposes:
 
