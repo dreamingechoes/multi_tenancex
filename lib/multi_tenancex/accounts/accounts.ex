@@ -4,8 +4,8 @@ defmodule MultiTenancex.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias MultiTenancex.Repo
 
+  alias MultiTenancex.Repo
   alias MultiTenancex.Accounts.Administrator
 
   @doc """

@@ -1,9 +1,9 @@
 defmodule MultiTenancex.Companies.Company do
-  alias MultiTenancex.Companies.Company
-  import Ecto.Changeset
   use Ecto.Schema
 
-  @type t :: %__MODULE__{}
+  import Ecto.Changeset
+
+  alias MultiTenancex.Companies.Company
 
   schema "companies" do
     field(:description, :string)

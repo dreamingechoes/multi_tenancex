@@ -4,9 +4,9 @@ defmodule MultiTenancex.TenantActions do
 
   Includes basic actions for migrations.
   """
-  alias Ecto.Adapters.SQL
-
   import Ecto.Query, only: [from: 2]
+
+  alias Ecto.Adapters.SQL
 
   require Logger
 

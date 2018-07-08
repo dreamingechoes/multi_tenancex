@@ -1,6 +1,8 @@
 defmodule MultiTenancex.Guardian do
   use Guardian, otp_app: :multi_tenancex
+
   import MultiTenancexWeb.Gettext
+
   alias Comeonin.Bcrypt
   alias MultiTenancex.Accounts
 

@@ -1,8 +1,8 @@
 defmodule MultiTenancexWeb.SessionController do
+  use MultiTenancexWeb, :controller
+
   alias MultiTenancex.Guardian
   alias MultiTenancex.Guardian.Plug
-
-  use MultiTenancexWeb, :controller
 
   plug(:put_layout, {MultiTenancexWeb.Admin.LayoutView, "admin_auth.html"})
 

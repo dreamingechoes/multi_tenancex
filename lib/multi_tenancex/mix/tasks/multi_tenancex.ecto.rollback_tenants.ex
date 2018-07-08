@@ -1,5 +1,6 @@
 defmodule Mix.Tasks.MultiTenancex.Ecto.RollbackTenants do
   use Mix.Task
+
   import Mix.Ecto
 
   alias MultiTenancex.TenantActions

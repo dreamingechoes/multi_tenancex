@@ -1,9 +1,9 @@
 defmodule MultiTenancex.Accounts.Administrator do
-  alias MultiTenancex.Accounts.Administrator
-  import Ecto.Changeset
   use Ecto.Schema
 
-  @type t :: %__MODULE__{}
+  import Ecto.Changeset
+
+  alias MultiTenancex.Accounts.Administrator
 
   schema "administrators" do
     field(:email, :string)

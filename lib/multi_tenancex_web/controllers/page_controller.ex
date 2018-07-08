@@ -1,7 +1,7 @@
 defmodule MultiTenancexWeb.PageController do
-  alias MultiTenancex.Companies
-
   use MultiTenancexWeb, :controller
+
+  alias MultiTenancex.Companies
 
   def index(conn, _params) do
     company =
