@@ -2,12 +2,35 @@
 
 [![CircleCI](https://circleci.com/gh/dreamingechoes/multi_tenancex.svg?style=shield)](https://circleci.com/gh/dreamingechoes/multi_tenancex)
 
-Example of Phoenix application with database multi-tenancy.
+Example of Phoenix application with database multi-tenancy. A practical way to see the concepts tackled
+in [this post from my website](http://dreamingecho.es/blog/a-dive-into-database-multi-tenancy-in-elixir-with-ecto).
 
-There's an example user in the seeds to use for testing purposes:
+## Images
 
-- **email**: example@example.com
-- **password**: 123456
+![Home](.images/multi_tenancex_home.png)
+Home.
+
+![Login](.images/multi_tenancex_login.png)
+Login.
+
+![Admin Dashboard](.images/multi_tenancex_admin_dashboard.png)
+Admin Dashboard.
+
+![Admin Product Index](.images/multi_tenancex_admin_product_index.png)
+Admin Product Index.
+
+![Admin Product New](.images/multi_tenancex_admin_product_new.png)
+Admin Product New.
+
+![Company Home](.images/multi_tenancex_company_home.png)
+Company Home.
+
+## Example data
+
+There's a user in the seeds to use for testing purposes:
+
+- **Email**: example@example.com
+- **Password**: 123456
 
 ## Special database multi-tenant mix tasks
 
