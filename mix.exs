@@ -5,7 +5,7 @@ defmodule MultiTenancex.Mixfile do
     [
       app: :multi_tenancex,
       version: "0.0.1",
-      elixir: "~> 1.6",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -45,7 +45,7 @@ defmodule MultiTenancex.Mixfile do
       # Default Phoenix stuff
       {:cowboy, "~> 1.1.2"},
       {:gettext, "~> 0.13.1"},
-      {:phoenix, "~> 1.3.2", override: true},
+      {:phoenix, "~> 1.3.4", override: true},
       {:phoenix_ecto, "~> 3.3.0"},
       {:postgrex, ">= 0.13.3"},
       {:phoenix_pubsub, "~> 1.0.2"},

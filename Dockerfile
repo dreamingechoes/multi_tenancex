@@ -1,10 +1,10 @@
 # Versions
 #
-# Erlang: 1:20.2.2
-# Elixir: 1.6.5
-# Phoenix: 1.3.2
+# Erlang: 1:21.0
+# Elixir: 1.7.2
+# Phoenix: 1.3.4
 
-FROM ubuntu:17.10
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -27,12 +27,12 @@ RUN wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
   && dpkg -i erlang-solutions_1.0_all.deb \
   && apt-get update
 
-ENV ERLANG_VERSION 1:20.2.2
+ENV ERLANG_VERSION 1:21.0
 
 # Install Erlang
 RUN apt-get install -y esl-erlang=$ERLANG_VERSION && rm erlang-solutions_1.0_all.deb
 
-ENV ELIXIR_VERSION 1.6.5
+ENV ELIXIR_VERSION 1.7.2
 
 # Install Elixir
 RUN mkdir /opt/elixir \
@@ -45,7 +45,7 @@ RUN mkdir /opt/elixir \
   && ln -s /opt/elixir/bin/iex \
   && ln -s /opt/elixir/bin/mix
 
-ENV PHOENIX_VERSION 1.3.2
+ENV PHOENIX_VERSION 1.3.4
 
 # Install the Phoenix Mix archive
 RUN mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phx_new-$PHOENIX_VERSION.ez
