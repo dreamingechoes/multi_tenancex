@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/multi_tenancex
     docker:
-      - image: circleci/elixir:1.6.5
+      - image: circleci/elixir:1.7.2
         environment:
           - MIX_ENV=ci
       - image: postgres:9.5
